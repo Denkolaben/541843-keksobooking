@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Денис Гайворонский](https://up.htmlacademy.ru/javascript/14/user/541843).
-* Наставник: `Неизвестно`.
+* Наставник: [Филипп Шамсиев](https://up.htmlacademy.ru/javascript/14/user/70260).
 
 ---
 
