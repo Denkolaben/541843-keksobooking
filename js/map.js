@@ -249,7 +249,6 @@ function renderMapPin() {
 }
 
 mainPin.addEventListener('mouseup', function () {
-  // var address = addressInput.value;
   addressInput.value = getPinCoordinate(mainPin, MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT);
   renderMapPin();
 });
