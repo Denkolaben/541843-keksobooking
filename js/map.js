@@ -28,6 +28,7 @@ var ESC_KEYCODE = 27;
 
 function getRandomIndex(array) {
   return Math.floor(Math.random() * (array.length - 1));
+
 }
 
 function getRandomInt(min, max) {
@@ -179,12 +180,13 @@ var mainPin = document.querySelector('.map__pin--main');
 var addForm = document.querySelector('.ad-form');
 var fieldsets = document.querySelectorAll('fieldset');
 var addressInput = document.getElementById('address');
+addressInput.value = getPinCoordinate(mainPin, MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT);
 
 function setActiveState() {
   map.classList.remove('map--faded');
   addForm.classList.remove('ad-form--disabled');
-  for (var i = 0; i < fieldsets.length; i++) {
-    fieldsets[i].disabled = false;
+  for (var j = 0; j < fieldsets.length; j++) {
+    fieldsets[j].disabled = false;
   }
   mainPin.removeEventListener('mouseup', onMainPinClick);
 }
@@ -196,8 +198,8 @@ function onMainPinClick() {
 function setInactiveState() {
   map.classList.add('map--faded');
   addForm.classList.add('ad-form--disabled');
-  for (var i = 0; i < fieldsets.length; i++) {
-    fieldsets[i].disabled = true;
+  for (var j = 0; j < fieldsets.length; j++) {
+    fieldsets[j].disabled = true;
   }
   mainPin.addEventListener('mouseup', onMainPinClick);
 }
@@ -223,12 +225,13 @@ function openPopup(index) {
   }
   var cardCloseButton = map.querySelector('.popup__close');
   cardCloseButton.addEventListener('click', closePopup);
-  cardCloseButton.addEventListener('keydown', onPopupEscPress);
+  document.addEventListener('keydown', onPopupEscPress);
+  mainPin.removeEventListener('click', openPopup);
 }
 
 var closePopup = function () {
   var mapCardPopup = map.querySelector('.map__card');
-  map.removeChild(mapCardPopup);
+  mapCardPopup.classList.add('hidden');
 };
 
 var onPopupEscPress = function (evt) {
@@ -239,9 +242,9 @@ var onPopupEscPress = function (evt) {
 
 function renderMapPin() {
   var PinFragment = document.createDocumentFragment();
-  for (var i = 0; i < NOTICE_AMOUNT; i++) {
-    var mapPin = setMapPin(i);
-    mapPin.setAttribute('array-index', i);
+  for (var j = 0; j < NOTICE_AMOUNT; j++) {
+    var mapPin = setMapPin(j);
+    mapPin.setAttribute('array-index', j);
     addListener(mapPin);
     PinFragment.appendChild(mapPin);
   }
@@ -249,8 +252,9 @@ function renderMapPin() {
 }
 
 mainPin.addEventListener('mouseup', function () {
-  addressInput.value = getPinCoordinate(mainPin, MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT);
   renderMapPin();
+  addressInput.value = getPinCoordinate(mainPin, MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT);
 });
+mainPin.addEventListener('click', openPopup);
 
 setInactiveState();
